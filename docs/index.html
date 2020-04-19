@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>sike suno</title>
+  </head>
+  <body>
+  	<style>
+ #today1 {
+  /* doesn't work in IE/ older Edge */
+  transform: translate(295px, 115px);
+}
+
+ #input {
+  /*display:none;*/
+}
+
+ #output {
+  /*display:none;*/
+}
+
+  	</style>
+  	<object id="mun_namako" data="sike_pi_mun_namako.svg" type="image/svg+xml"></object>
+	<object id="namako_ala" data="sike_pi_namako_ala.svg" type="image/svg+xml"></object>
+	<p>
+		ni li sitelen e nasin tenpo pi jan Salan.  sina ken kama sona e ona lon <a href="https://www.reddit.com/r/tokipona/comments/dr378j/lunisolar_calendar_for_toki_pona_done/">lipu ni</a>.
+	<p>
+		<ul>
+			<li><a href="sike_pi_namako_ala.pdf">sitelen sike pi namako ala</a>
+			<li><a href="sike_pi_mun_namako.pdf">sitelen sike pi mun namako</a>
+		</ul>
+	</p>
+	<hr>
+
+  	<div id="input">
+
+Date:<input id="date" min="2001-03-20" type="date" name="task_date" />
+Time:<input id="time" type="time" name="task_time"/>
+
+       <br><br>
+
+  	</div>
+  	
+  	<div id="output">
+  	</div>
+    <script type="text/javascript">
+
+    	var mun_namako = null;
+    	var namako_ala = null;
+
+    	Date.prototype.toDateInputValue = (function() {
+		    var local = new Date(this);
+		    local.setMinutes(this.getMinutes() - this.getTimezoneOffset());
+		    return local.toJSON().slice(0,10);
+		});
+
+		Date.prototype.addDays = function(days) {
+		    var date = new Date(this.valueOf());
+		    date.setDate(date.getDate() + days);
+		    return date;
+		}
+
+
+    	var today = new Date();  
+
+    	function GenDate(){
+	    	var tenpo_pi_suno_pini = "19:00:00"
+	    	var tenpo_open = new Date(`March 19, 2001 ${tenpo_pi_suno_pini}`);
+
+	    	if (today<tenpo_open){
+	    		document.getElementById("output").innerHTML="invalid time selected, must be after "+tenpo_open;
+	    		return;
+	    	}
+
+	    	function mun_namako_li_lon_sike_nanpa(n){
+	    		var sike_namako = [0,1,0,0,1,0,1,0]
+
+		    	var namako = sike_namako[n%8]===1;
+		    	return namako;
+	    	}
+
+	    	//number of days in year N (starting at 0)
+	    	function nanpa_suno_pi_sike_nanpa(n){
+	    		if (mun_namako_li_lon_sike_nanpa(n)){
+	    			return 29+30+29  +  30+29+30  +  29+30+29  +  30+29+30 + 29; //383
+	    		} else {
+	    			return 29+30+29  +  30+29+30  +  29+30+29  +  30+29+30; //354		
+	    		}
+	    	}
+
+	    	//starting time of year N
+	    	function tenpo_open_pi_sike_nanpa(n){
+	    		var start = new Date(tenpo_open)
+	    		for (var i=0;i<n;i++){
+	    			var days_in_year=nanpa_suno_pi_sike_nanpa(i)
+	    			start = start.addDays(days_in_year)
+	    		}
+	    		return start;
+	    	}
+
+	    	//number of days n month 0 (starting at 0)
+	    	function days_in_month(n){
+	    		return 8+8+8+5 + ((n%2===1)?1:0);
+	    	}
+
+	    	var jahr = 4;//starts at 0
+
+
+	    	var content=`analysing ${today}<br>`
+
+	    	for (var k=0;k<20;k++){
+	    		var tenpo_open_sike = tenpo_open_pi_sike_nanpa(k);
+	    		var namako =  mun_namako_li_lon_sike_nanpa(k)
+	    		// content += `tenpo suno nanpa ${k+1} li open lon ${tenpo_open_sike} ${ (namako) ?"(MUN NAMAKO)":""}. <br>`
+	    	}
+
+	    	content+=`<br>`
+
+	    	var this_years_start=new Date(tenpo_open);
+	    	var year=0;
+	    	for (;true;year++){
+	    		var year_start = tenpo_open_pi_sike_nanpa(year+1)
+	    		if (year_start > today){
+	    			break;
+	    		}
+	    		this_years_start=year_start;    		
+	    	}
+
+	    	var this_days_start=new Date(this_years_start);
+	    	var day_of_year=0;
+	    	for (;true;day_of_year++){
+	    		var day_start = this_years_start.addDays(day_of_year);
+	    		if (day_start > today){
+	    			break;
+	    		}
+	    		this_days_start=day_start;    		
+	    	}
+
+	    	var this_months_start=new Date(this_years_start);
+	    	var month_of_year=0;
+	    	for (;true;month_of_year++){
+	    		var month_start = this_months_start.addDays(days_in_month(month_of_year));
+	    		if (month_start > today){
+	    			break;
+	    		}
+	    		this_months_start=month_start;    		
+	    	}
+
+	    	var day_in_month_start=new Date(this_months_start);
+	    	var day_of_month=0;
+	    	for (;true;day_of_month++){
+	    		var day_start = day_in_month_start.addDays(day_of_month);
+	    		if (day_start > today){
+	    			break;
+	    		}
+	    		day_in_month_start=day_start;    		
+	    	}
+
+	    	var  shortweekstart = month_of_year%2===0;
+
+
+	    	var namako_year = mun_namako_li_lon_sike_nanpa(year);
+
+	    	content+=`this is year number ${year+1}.<br>`
+	    	content+=`this is cycle position ${(year%8)+1} (${namako_year?"mun namako year":"no mun namako this year"})<br>`
+
+	    	content+=`this year started at ${this_years_start}.<br>`
+	    	content+=`this is day ${day_of_year+1} of the year.<br>`
+
+	    	content+=`this month is month number ${month_of_year+1}.<br>`
+	    	content+=`this month started at ${this_months_start}.<br>`
+
+	    	var season_of_year = Math.floor(month_of_year/3);
+
+	    	content+=`this is day ${day_of_month+1} of the month.<br>`
+	    	content+=`this is season ${season_of_year+1} of the yeah.<br>`
+	    	
+
+	    	// content+=`<object type="image/svg+xml" data="${namako_year?"sike_pi_mun_namako.svg":"sike_pi_namako_ala.svg"}"></object>`
+	    	if (namako_year){
+	    		document.getElementById("mun_namako").style.display="inline";
+	    		document.getElementById("namako_ala").style.display="none";
+	    	} else {
+	    		document.getElementById("namako_ala").style.display="inline";
+	    		document.getElementById("mun_namako").style.display="none";
+	    	}
+	    	document.getElementById("output").innerHTML=content;
+
+	    	// day_of_month=3;
+	    	// month_of_year=4;
+	    	var day_of_week=day_of_month%8;
+	    	var week_of_month=Math.floor(day_of_month/8)
+
+	    	var month_of_season=month_of_year%3;
+	    	var season_of_year=Math.floor(month_of_year/3);
+
+			if (namako_ala!==null&& mun_namako!==null){
+				var svg = namako_year?mun_namako:namako_ala;
+			    var tt = namako_ala.getElementById("today1");
+			    tt.setAttribute("opacity", "1");
+			    var x = 855+day_of_week*85+week_of_month*737;
+			    var y = 850+month_of_season*198+season_of_year*680;	
+			    tt.setAttribute('transform',`translate(${x},${y})`);
+			}
+		}
+
+		GenDate();
+		function dateChange(evt){
+		    var date_str = document.getElementById("date").value;
+        	var time_str = document.getElementById("time").value;
+    		var date = new Date(date_str + " " + time_str);
+    		today=date;
+    		GenDate();
+		}
+
+		document.getElementById('date').value = new Date().toDateInputValue();
+		document.getElementById('time').value = "12:00";
+
+		document.getElementById("date").addEventListener('change',evt => dateChange(evt));
+		document.getElementById("time").addEventListener('change',evt => dateChange(evt));
+
+		window.onload = function (){
+		    mun_namako = document.getElementById("mun_namako").contentDocument;
+		    namako_ala = document.getElementById("namako_ala").contentDocument;
+
+		    GenDate();
+		}
+
+    	//day ends at sunset 19:00 say on average
+    </script>
+  </body>
+</html>
