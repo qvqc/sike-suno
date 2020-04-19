@@ -4,7 +4,6 @@
     <meta charset="utf-8">
     <title>sike suno</title>
   </head>
-  <body>
   	<style>
  #today1 {
   /* doesn't work in IE/ older Edge */
@@ -23,6 +22,21 @@ object {
 }
 
   	</style>
+
+
+  <body>
+  	<div id="input">
+
+Date:<input id="date" min="2001-03-20" type="date" name="task_date" />
+Time:<input id="time" type="time" name="task_time"/>
+
+       <br><br>
+
+  	</div>
+
+  	<div id="output">
+  	</div>
+
   	<object id="mun_namako" data="sike_pi_mun_namako.svg" type="image/svg+xml"></object>
 	<object id="namako_ala" data="sike_pi_namako_ala.svg" type="image/svg+xml"></object>
 	<p>
@@ -37,17 +51,6 @@ object {
 	<p>
 	<hr>
 
-  	<div id="input">
-
-Date:<input id="date" min="2001-03-20" type="date" name="task_date" />
-Time:<input id="time" type="time" name="task_time"/>
-
-       <br><br>
-
-  	</div>
-
-  	<div id="output">
-  	</div>
     <script type="text/javascript">
 
     	var mun_namako = null;
@@ -72,10 +75,19 @@ Time:<input id="time" type="time" name="task_time"/>
 	    	var tenpo_pi_suno_pini = "19:00:00"
 	    	var tenpo_open = new Date(`March 19, 2001 ${tenpo_pi_suno_pini}`);
 
+
+
+			if (isNaN(today.getTime())) {  // d.valueOf() could also work
+				document.getElementById("output").innerHTML="invalid time selected, must be after "+tenpo_open;
+				return;
+				// date is not valid
+			}
+
 	    	if (today<tenpo_open){
 	    		document.getElementById("output").innerHTML="invalid time selected, must be after "+tenpo_open;
 	    		return;
 	    	}
+
 
 	    	function mun_namako_li_lon_sike_nanpa(n){
 	    		var sike_namako = [0,1,0,0,1,0,1,0]
@@ -131,10 +143,12 @@ Time:<input id="time" type="time" name="task_time"/>
 	    		this_years_start=year_start;    		
 	    	}
 
+	    	console.log("DAY_OF_YEAR")
 	    	var this_days_start=new Date(this_years_start);
 	    	var day_of_year=0;
 	    	for (;true;day_of_year++){
 	    		var day_start = this_years_start.addDays(day_of_year);
+	    		console.log(day_start,today);
 	    		if (day_start > today){
 	    			break;
 	    		}
@@ -150,11 +164,13 @@ Time:<input id="time" type="time" name="task_time"/>
 	    		}
 	    		this_months_start=month_start;    		
 	    	}
+	    	console.log("DAY_OF_MONTH")
 
 	    	var day_in_month_start=new Date(this_months_start);
 	    	var day_of_month=0;
 	    	for (;true;day_of_month++){
-	    		var day_start = day_in_month_start.addDays(day_of_month);
+	    		var day_start = day_in_month_start.addDays(1);
+	    		console.log(day_start,today,day_of_month);
 	    		if (day_start > today){
 	    			break;
 	    		}
@@ -218,8 +234,8 @@ Time:<input id="time" type="time" name="task_time"/>
     		GenDate();
 		}
 
-		document.getElementById('date').value = new Date().toDateInputValue();
-		document.getElementById('time').value = "12:00";
+		document.getElementById('date').value = (new Date()).toDateInputValue();
+		document.getElementById('time').value = (new Date()).getHours() + ":"+(new Date()).getMinutes();
 
 		document.getElementById("date").addEventListener('change',evt => dateChange(evt));
 		document.getElementById("time").addEventListener('change',evt => dateChange(evt));
