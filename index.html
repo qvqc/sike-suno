@@ -199,7 +199,7 @@ Time:<input id="time" type="time" name="task_time"/>
 
 			if (namako_ala!==null&& mun_namako!==null){
 				var svg = namako_year?mun_namako:namako_ala;
-			    var tt = namako_ala.getElementById("today1");
+			    var tt = svg.getElementById("today1");
 			    tt.setAttribute("opacity", "1");
 			    var x = 855+day_of_week*85+week_of_month*737;
 			    var y = 850+month_of_season*198+season_of_year*680;	
