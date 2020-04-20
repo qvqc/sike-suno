@@ -3,14 +3,204 @@
   <head>
     <meta charset="utf-8">
     <title>sike suno</title>
-  </head>
+      <link rel="stylesheet" href="css/bootstrap.min.css">
+  <style>
+  :root {
+    --cardcol: #31a2f2
+  }
+
+.container {
+  max-width: 800px;
+}
+
+.topnav a {
+  font-weight: bold;
+  color: inherit;
+}
+
+th {
+  font-weight:400;
+  border-bottom:1px solid #fff;
+  background:var(--cardcol);
+  color: white;
+  padding:8px
+}
+
+td {
+  background:#dddddd;
+  border-bottom:1px solid #fff;
+  color:black;
+  border-top:1px solid transparent;
+  padding:8px;
+}
+
+table {
+  margin-bottom: 10px;
+}
+
+th:first-child{
+  border-top-left-radius: 10px;
+}
+th:last-child{
+  border-top-right-radius: 10px;
+}
+
+
+tr:last-child td:first-child{
+  border-bottom-left-radius: 10px;
+}
+tr:last-child td:last-child{
+  border-bottom-right-radius: 10px;
+}
+
+
+#home-jumbotron {
+  background-color: inherit;
+}
+.font-125 {
+  font-size: 125%;
+}
+.tag-btn {
+  margin-bottom: 0.3em;
+}
+
+.col-md-auto img {
+  max-width:300px;
+}
+
+.text-nowrap {
+    white-space: nowrap;
+}
+/*
+.jumbotron {
+  background-image: url("../sitelen_lukin/{{ .Params.Sitelen_Lukin }}");
+  background-repeat: no-repeat;
+  background-position: center; 
+  background-color: transparent;
+  margin-bottom:0;
+}
+*/
+
+body {
+  background-color: #f7e26b;
+  background-image: url('bg.svg');
+  background-position: center top; 
+  background-size: 256px;
+
+  padding-bottom:0px;
+}
+
+
+.topnav{
+  margin-top:5px;
+  background-color: white;
+  border-radius: 10px;
+  border-bottom: 10px;
+    background-color:#eb8931;
+            box-shadow: -5px 5px 10px rgba(0,0,.2,0.5);
+}
+
+.propercontent{
+  background-color:red;
+  padding-top:0px;
+  padding-bottom:0px;
+  border-radius:20px;
+  box-shadow: -5px 5px 10px rgba(0,0,.2,0.5);
+  margin-top:20px;
+  margin-bottom:40px;
+}
+
+#main{
+  margin-top:0px;
+  background-color: white;
+  padding:20px;
+  border-radius:20px;
+  margin-bottom:0px;
+}
+
+  @font-face {
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: local('Nunito Regular'), local('Nunito-Regular'), url(fonts/nunito-latin.woff2) format('woff2');
+  }
+
+  /* latin-ext */
+  @font-face {
+    font-family: 'Nunito';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: local('Nunito Bold'), local('Nunito-Bold'), url(fonts/nunito-latin-bold.woff2) format('woff2');
+  }
+
+body{
+            font-family: Nunito, Arial, sans-serif;}
+
+
+  .card0 {
+      background-color: #31a2f2;
+  }
+
+  .card1 {
+      background-color: #a3ce27;
+  }
+  
+  .card2 {
+      background-color: #eb8931;
+  }
+  
+  .card3 {
+      background-color: #e06f8b;
+  }
+  
+  .card4 {
+      background-color: #9964f9;
+  }
+  
+  blockquote{
+    background-color:lightyellow;
+    margin:5px;
+    padding:10px;
+    margin-bottom: 15px;
+    box-shadow: -5px 5px 5px rgba(0,0,.2,0.25);
+  }
+
+  blockquote p:last-child{
+    margin-bottom: 0em;
+  }
+
+  blockquote ul{
+    margin-bottom: 0em;
+    /*margin-block-end: 1em;*/
+  }
+
+
+
+video {
+    border : 1px solid black;
+    border-radius:10px;
+    max-height:400px;
+    max-width:80%;
+}
+
+  h1 {
+    text-align: center;
+  }
+
+
+.weiss{
+  color:white;
+}
+</style>
+
   	<style>
  #today1 {
   /* doesn't work in IE/ older Edge */
   transform: translate(295px, 115px);
 }
 
-body{width:700px;}
  #input {
   display:none;
 }
@@ -18,34 +208,33 @@ body{width:700px;}
  #output {
   display:none;
 }
-object {
-	width:800px;
+
+
+  main object {
+    border-radius:10px;
+    max-height:600px;
+    max-width:100%;
+  }
+
+
+
+td {
+border-right: 1px solid white;
 }
 
-
-table, td, tr, th{
-    border:1px solid #000000;
-    border-collapse: collapse;    
- }
-
- table{
- 	margin:10px;
- }
-
-
- td, tr{
- 	padding:5px;
- 	margin:5px;
- }
-
- th {
- 	background-color: lightgray;
- }
-
+th {
+border-right: 1px solid white;
+}
   	</style>
 
 
+  </head>
   <body>
+
+
+    <div class="container">
+      <main id="main">
+
 <h1>jan Salan's Solar Calandar for Toki Pona</h1>
 
 <h3 id="datestr">[calculating today's date]</h3>
@@ -159,8 +348,8 @@ Time:<input id="time" type="time" name="task_time"/>
 
   	<div id="output">
   	</div>
-
-
+</main>
+</div>
     <script type="text/javascript">
 
     	var mun_namako = null;
@@ -329,7 +518,7 @@ Time:<input id="time" type="time" name="task_time"/>
 	    	var week=['mun len','mun kipisi open','mun suno','mun kipisi pini'][season_of_year];
 	    	var mun_emoji=['🌚','🌛','🌝','🌜'][season_of_year];
 
-	    	var datestr_str=`<ul><li>sike nanpa ${numbToTPStr(year)} li lon. <li>tenpo li ${season}. <li>mun li nanpa ${numbToTPStr(month_of_year)}. <li>${week} li lon. ${mun_emoji}</ul>`
+	    	var datestr_str=`<ul><li>sike nanpa ${numbToTPStr(year)} li lon. <li>tenpo li ${season}. <li>mun li nanpa ${numbToTPStr(month_of_year+1)}. <li>${week} li lon. ${mun_emoji}</ul>`
 	    	document.getElementById("datestr").innerHTML=datestr_str;
 
 
