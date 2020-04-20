@@ -514,11 +514,28 @@ Time:<input id="time" type="time" name="task_time"/>
 	    	var namako_year = mun_namako_li_lon_sike_nanpa(year);
 	    	var season_of_year = Math.floor(month_of_year/3);
 
-	    	var season=['kasi','seli','pan','lete','namako'][season_of_year];
-	    	var week=['mun len','mun kipisi open','mun suno','mun kipisi pini'][season_of_year];
-	    	var mun_emoji=['🌚','🌛','🌝','🌜'][season_of_year];
 
-	    	var datestr_str=`<ul><li>sike nanpa ${numbToTPStr(year)} li lon. <li>tenpo li ${season}. <li>mun li nanpa ${numbToTPStr(month_of_year+1)}. <li>${week} li lon. ${mun_emoji}</ul>`
+	    	var month_of_season=month_of_year%3;
+	    	var season_of_year=Math.floor(month_of_year/3);
+
+
+	    	var season=['kasi','seli','pan','lete','namako'][season_of_year];
+	    	var week=['len','kipisi open','suno','kipisi pini'][season_of_year];
+	    	var mun_emoji=['🌚','🌛','🌝','🌜'][season_of_year];
+	    	var month_of_season_str = ['mun open','mun awen','mun pini'][month_of_season];
+	    	if (month_of_year===12){
+	    		month_of_season_str="namako"
+	    	}
+
+	    	var datestr_str=`
+	    	<ul>
+	    		<li>
+	    			sike suno nanpa ${numbToTPStr(year)}. 
+	    		<li>
+	    			tenpo ${season}. 
+	    		<li>
+	    			${month_of_season_str} li ${week}. ${mun_emoji}
+	    		</ul>`
 	    	document.getElementById("datestr").innerHTML=datestr_str;
 
 
@@ -550,8 +567,6 @@ Time:<input id="time" type="time" name="task_time"/>
 	    	var day_of_week=day_of_month%8;
 	    	var week_of_month=Math.floor(day_of_month/8)
 
-	    	var month_of_season=month_of_year%3;
-	    	var season_of_year=Math.floor(month_of_year/3);
 
 			if (namako_ala!==null&& mun_namako!==null){
 				var svg = namako_year?mun_namako:namako_ala;
