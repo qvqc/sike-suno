@@ -11,30 +11,139 @@
 }
 
  #input {
-  /*display:none;*/
+  display:none;
 }
 
  #output {
-  /*display:none;*/
+  display:none;
 }
 object {
 	width:800px;
 }
 
+
+table, td, tr, th{
+    border:1px solid #000000;
+    border-collapse: collapse;    
+ }
+
+ table{
+ 	margin:10px;
+ }
+
+
+ td, tr{
+ 	padding:5px;
+ 	margin:5px;
+ }
+
+ th {
+ 	background-color: lightgray;
+ }
+
   	</style>
 
 
   <body>
+<h1>jan Salan's Solar Calandar for Toki Pona</h1>
+
+<h3 id="datestr">[calculating today's date]</h3>
+
+  	<object id="mun_namako" data="sike_pi_mun_namako.svg" type="image/svg+xml"></object>
+	<object id="namako_ala" data="sike_pi_namako_ala.svg" type="image/svg+xml"></object>
+
 
 	<p>
-		ni li sitelen e nasin tenpo.  <a href="https://www.youtube.com/watch?v=QdRBD7dfdlU">jan Salan</a> li pana e nasin ni.  sina ken sona e ona lon <a href="https://www.reddit.com/r/tokipona/comments/dr378j/lunisolar_calendar_for_toki_pona_done/">lipu ni</a>.
+		This is an implementation of a solar calendar system by <a href="https://www.youtube.com/watch?v=QdRBD7dfdlU">jan Salan</a>.   You can find out more about it on their reddit post <a href="https://www.reddit.com/r/tokipona/comments/dr378j/lunisolar_calendar_for_toki_pona_done/">here</a>.  By reading the page, as well as discussing things with him (some things in the post were unclear to me, and made some minor changes after writing it).
 	<p>
+		<h2>Specs</h2>
 		<ul>
-			<li><a href="sike_pi_namako_ala.pdf">sitelen sike .PDF pi namako ala</a>
-			<li><a href="sike_pi_mun_namako.pdf">sitelen sike .PDF pi mun namako</a>
+			<li> 
+				A day starts at sunrise.  For ease of coding, I'm fixing this at 06:00.
+			<li> 
+				The calendar year starts with <b>Year 0</b> at <b>March 25th, 2001</b>, the first new Moon after the Spring Equinox of 2001, the year Toki Pona came into the world.  The exact date that a year starts at varies from year to year, as it's lunar-aligned.
+
+<table><tbody><tr><th>year #</th><th>year start</th><th>year #</th><th>year start</th><th>year #</th><th>year start</th><th>year #</th><th>year start</th></tr><tr><td>0</td><td>2001-03-25 </td><td>8</td><td>2009-03-22 </td><td>16</td><td> 2017-03-19</td><td>24</td><td> 2025-03-16</td></tr><tr><td>1</td><td>2002-03-14 </td><td>9</td><td>2010-03-11 </td><td>17</td><td> 2018-03-08</td><td>25</td><td> 2026-03-05</td></tr><tr><td>2</td><td>2003-04-01 </td><td>10</td><td> 2011-03-29</td><td>18</td><td> 2019-03-26</td><td>26</td><td> 2027-03-23</td></tr><tr><td>3</td><td>2004-03-20 </td><td>11</td><td> 2012-03-17</td><td>19</td><td> 2020-03-14</td><td>27</td><td> 2028-03-11</td></tr><tr><td>4</td><td>2005-03-09 </td><td>12</td><td> 2013-03-06</td><td>20</td><td> 2021-03-03</td><td>28</td><td> 2029-02-28</td></tr><tr><td>5</td><td>2006-03-27 </td><td>13</td><td> 2014-03-24</td><td>21</td><td> 2022-03-21</td><td>29</td><td> 2030-03-18</td></tr><tr><td>6</td><td>2007-03-16 </td><td>14</td><td> 2015-03-13</td><td>22</td><td> 2023-03-10</td><td>30</td><td>2031-03-07</td></tr><tr><td>7</td><td>2008-04-02 </td><td>15</td><td> 2016-03-30</td><td>23</td><td> 2024-03-27</td><td>31</td><td>2032-03-24</td></tr></tbody></table>
+			<li>
+				Each year is divided into 12 months. To stop things in sync with the seasons, every so often there is an extra, 13th season in the year, a <b>mun namako</b> (extra year).  The pattern cycles every eight years - here's what it looked like in the first eight years:
+				
+				<table class="tg">
+				  <tr>
+				    <td class="tg-0pky">2001</th>
+				    <td class="tg-0pky"></th>
+				  </tr>
+				  <tr>
+				    <td class="tg-0pky">2002</td>
+				    <td class="tg-0pky">mun namako</td>
+				  </tr>
+				  <tr>
+				    <td class="tg-0pky">2003</td>
+				    <td class="tg-0pky"></td>
+				  </tr>
+				  <tr>
+				    <td class="tg-0pky">2004</td>
+				    <td class="tg-0pky"></td>
+				  </tr>
+				  <tr>
+				    <td class="tg-0lax">2005</td>
+				    <td class="tg-0lax">mun namako</td>
+				  </tr>
+				  <tr>
+				    <td class="tg-0lax">2006</td>
+				    <td class="tg-0lax"></td>
+				  </tr>
+				  <tr>
+				    <td class="tg-0lax">2007</td>
+				    <td class="tg-0lax">mun namako</td>
+				  </tr>
+				  <tr>
+				    <td class="tg-0lax">2008</td>
+				    <td class="tg-0lax"></td>
+				  </tr>
+				</table>
+			<li>
+				It's possible over larger periods of time (centuries), further adjustments, extra mun namako might be required.  That's not taken into account into the current iteration of the system.
+			
+			<li>
+				The first month of the year has 29 days, the second has 30, and they alternate in length like this.
+			<li>
+				A month is divded into four parts corresponding to the phases of the moon:
+				<ul>
+					<li><b>mun len</b> : New Moon
+					<li><b>mun kipisi open</b> : First Quarter
+					<li><b>mun suno/suli</b> : Full Moon
+					<li><b>mun kipisi pini</b> : Third Quarter
+				</ul>
+				The first three parts are 8 days each, the last part is either four or five days, alternating throughout the year.
+			<li>
+				The year is divided into four seasons of three months.
+				<ul>
+					<li><b>tenpo pan</b> 
+					<li><b>tenpo seli</b>
+					<li><b>tenpo pan</b> 
+					<li><b>tenpo lete</b>
+				</ul>
+				If there is a mun namako, it's not regarded as being part of any season.			
 		</ul>
-			<a href="https://github.com/increpare/sike-suno">lipu Kitu pi lipu ni.</a>
+
 	<p>
+		<h2>Download</h2>
+
+		<ul>
+			<li>
+				You can view a latin version of the calender <a href="https://docs.google.com/spreadsheets/d/1IYfpIOmf3PXBtASs6apMZxr5fkpejJ0e06ZFQOj-lzQ/edit?usp=sharing">here on google sheets</a>, or <a href="sike_lasina.pdf">here</a> as a PDF.
+			<li>
+				You can view a fancy PDF sitelen sitelen version of the calendar here:
+				<ul>
+					<li> <a href="sike_pi_namako_ala.pdf">sike pi mun namako</a>
+					<li> <a href="sike_pi_namako_ala.pdf">sike pi namakoala </a>
+				</ul>
+			<li>
+				<a href="https://github.com/increpare/sike-suno">Github Page for this project</a>
+		</ul>
+	<p>
+		<h2>Contact</h2>
+		If you notice any errors or have any recommendations/feedback, let me know at <a href="mailto:jan.Inkepa@gmail.com">jan.Inkepa@gmail.com</a> .
 
 	</p>
 	<hr>
@@ -49,10 +158,6 @@ Time:<input id="time" type="time" name="task_time"/>
 
   	<div id="output">
   	</div>
-
-  	<object id="mun_namako" data="sike_pi_mun_namako.svg" type="image/svg+xml"></object>
-	<object id="namako_ala" data="sike_pi_namako_ala.svg" type="image/svg+xml"></object>
-
 
 
     <script type="text/javascript">
@@ -72,12 +177,44 @@ Time:<input id="time" type="time" name="task_time"/>
 		    return date;
 		}
 
+		function stringifyDat(MyDate){
+			return MyDate.getFullYear()+'-'
+             + ('0' + (MyDate.getMonth()+1)).slice(-2) + '-'
+			+ ('0' + MyDate.getDate()).slice(-2)
+		}
+
+    	function numbToTPStr(n){
+    		if (n<=0){
+    			return "ale"
+    		}
+
+    		var result="";
+    		while (n>=1){
+    			if (n>=100){
+    				result=result+" ale"
+    				n-=100;
+    			} else if (n>=20){
+    				result=result+" mute"
+    				n-=20;
+    			} else if (n>=5){
+    				result=result+" luka"	 
+    				n-=5;   			
+    			} else if (n>=2){
+    				result=result+" tu"	
+    				n-=2;    			
+    			} else if (n>=1){
+    				result=result+" wan"
+    				n-=1;	    			
+    			}
+    		}
+    		return result.trim();
+    	}
 
     	var today = new Date();  
 
     	function GenDate(){
-	    	var tenpo_pi_suno_pini = "19:00:00"
-	    	var tenpo_open = new Date(`March 19, 2001 ${tenpo_pi_suno_pini}`);
+	    	var tenpo_pi_suno_pini = "06:00:00"
+	    	var tenpo_open = new Date(`March 25, 2001 ${tenpo_pi_suno_pini}`);
 
 
 
@@ -129,10 +266,10 @@ Time:<input id="time" type="time" name="task_time"/>
 
 	    	var content=`analysing ${today}<br>`
 
-	    	for (var k=0;k<20;k++){
+	    	for (var k=0;k<32;k++){
 	    		var tenpo_open_sike = tenpo_open_pi_sike_nanpa(k);
 	    		var namako =  mun_namako_li_lon_sike_nanpa(k)
-	    		// content += `tenpo suno nanpa ${k+1} li open lon ${tenpo_open_sike} ${ (namako) ?"(MUN NAMAKO)":""}. <br>`
+	    		content += `tenpo suno nanpa ${k} li open lon ${stringifyDat(tenpo_open_sike)} ${ (namako) ?"(MUN NAMAKO)":""}. <br>`
 	    	}
 
 	    	content+=`<br>`
@@ -185,17 +322,23 @@ Time:<input id="time" type="time" name="task_time"/>
 
 
 	    	var namako_year = mun_namako_li_lon_sike_nanpa(year);
+	    	var season_of_year = Math.floor(month_of_year/3);
 
-	    	content+=`this is year number ${year+1}.<br>`
-	    	content+=`this is cycle position ${(year%8)+1} (${namako_year?"mun namako year":"no mun namako this year"})<br>`
+	    	var season=['kasi','seli','pan','lete','namako'][season_of_year];
+	    	var week=['mun len','mun kipisi open','mun suno','mun kipisi pini'][season_of_year];
+
+	    	var datestr_str=`<ul><li>tenpo ni li sike nanpa ${numbToTPStr(year)}. <li>tenpo li ${season}. <li>mun li nanpa ${numbToTPStr(month_of_year)}. <li>${week} li lon.</ul>`
+	    	document.getElementById("datestr").innerHTML=datestr_str;
+
+
+	    	content+=`this is year number ${year}.<br>`
+	    	content+=`this is cycle position ${(year%8)+1} (${namako_year?"mun namako year":" this year"})<br>`
 
 	    	content+=`this year started at ${this_years_start}.<br>`
 	    	content+=`this is day ${day_of_year+1} of the year.<br>`
 
 	    	content+=`this month is month number ${month_of_year+1}.<br>`
 	    	content+=`this month started at ${this_months_start}.<br>`
-
-	    	var season_of_year = Math.floor(month_of_year/3);
 
 	    	content+=`this is day ${day_of_month+1} of the month.<br>`
 	    	content+=`this is season ${season_of_year+1} of the year.<br>`
@@ -251,7 +394,6 @@ Time:<input id="time" type="time" name="task_time"/>
 		    GenDate();
 		}
 
-    	//day ends at sunset 19:00 say on average
     </script>
   </body>
 </html>
