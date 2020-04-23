@@ -8,4 +8,4 @@ Using these svg files for sitelen pona:
 * https://github.com/sumpygump/sitelen-sitelen
 
 Check it out here:
-* https://increpare.github.io/sike-suno/
+https://toki.increpare.com/sike-suno/
